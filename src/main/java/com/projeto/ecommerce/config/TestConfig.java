@@ -3,6 +3,7 @@ package com.projeto.ecommerce.config;
 import com.projeto.ecommerce.entities.Category;
 import com.projeto.ecommerce.entities.Order;
 import com.projeto.ecommerce.entities.OrderItem;
+import com.projeto.ecommerce.entities.Payment;
 import com.projeto.ecommerce.entities.Product;
 import com.projeto.ecommerce.entities.User;
 import com.projeto.ecommerce.entities.enums.OrderStatus;
@@ -77,5 +78,8 @@ public class TestConfig implements CommandLineRunner {
         orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 
 
+        Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+        o1.setPayment(pay1);
+        orderRepository.save(o1);
     }
 }
