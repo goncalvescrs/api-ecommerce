@@ -52,8 +52,7 @@ public class UserResource {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
         service.delete(id);
-//        return ResponseEntity.noContent().build(); // retorna 204 no content
-        return ResponseEntity.ok("Registro com ID: " + id + " foi deletado com sucesso!");
+        return ResponseEntity.noContent().build();
     }
 }
 
