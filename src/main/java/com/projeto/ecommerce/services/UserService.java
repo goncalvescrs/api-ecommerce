@@ -4,6 +4,7 @@ import com.projeto.ecommerce.entities.User;
 import com.projeto.ecommerce.repositories.UserRepository;
 import com.projeto.ecommerce.services.exceptions.DatabaseException;
 import com.projeto.ecommerce.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class UserService {
     }
 
     public User insert(User obj){
-        return repository.save(obj);
+            return repository.save(obj);
     }
 
     public void delete(Long id) {
@@ -42,12 +43,16 @@ public class UserService {
     }
 
     public User update(Long id, User obj){
-        User entity = repository.getReferenceById(id);
+        try{
+            User entity = repository.getReferenceById(id);
+            entity.setName(obj.getName());
+            entity.setEmail(obj.getEmail());
+            entity.setPhone(obj.getPhone());
+            return repository.save(entity);
 
-        entity.setName(obj.getName());
-        entity.setEmail(obj.getEmail());
-        entity.setPhone(obj.getPhone());
+        } catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException(id);
 
-        return repository.save(entity);
+        }
     }
 }
